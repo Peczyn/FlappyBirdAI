@@ -1,5 +1,8 @@
 # Used Python 3.9 interpreter and libraries like
 # OS, Pygame, Random, Tensorflow, Keras and numpy
+# took like 2 days to complete but totally worth it
+# after some gens can become a perfect AI
+# my best bird got to like 200k score
 import os
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"  # only to hide prompts when running
@@ -63,7 +66,7 @@ def createModel():
     return model
 
 
-def createChildModel(parent_model, deviation_factor=0.1):
+def createChildModel(parent_model, deviation_factor):
     child_model = Sequential()
     for layer in parent_model.layers:
         if isinstance(layer, Dense):
@@ -173,9 +176,9 @@ def generateBirds(numberOfBirds, lastGen, maxscore, maxTuple):
         lastGen.clear()
 
         deviation = 0
-        if maxscore < 1000:
+        if maxscore < 250:
             deviation = 0.25
-        elif maxscore < 2500:
+        elif maxscore < 1000:
             deviation = 0.15
         elif maxscore < 5000:
             deviation = 0.1
@@ -192,9 +195,9 @@ def generateBirds(numberOfBirds, lastGen, maxscore, maxTuple):
                               )
                          )
 
-def play_game(birds, pipes, inGameScore, lastGenerationBirdsArray, generation):
+def play_game(birds, pipes, lastGenerationBirdsArray, generation):
     timer = 0
-
+    inGameScore = 0
     while birds.__sizeof__() != 0:
         if timer == 0:
             generate_pipes(pipes)
@@ -223,7 +226,7 @@ def play_game(birds, pipes, inGameScore, lastGenerationBirdsArray, generation):
         birdsUpdate(birds)
         timer -= 1
         inGameScore += 1
-        clock.tick(30)
+        clock.tick(120)
 
         # display display
         pygame.display.set_caption("FlappyBird" + "  " + "SCORE: " + str(inGameScore))
@@ -236,7 +239,7 @@ def play_game(birds, pipes, inGameScore, lastGenerationBirdsArray, generation):
 
 
 if __name__ == "__main__":
-    gener = 1
+    gener = 0
 
     # initialize window and game parameters
     display_width = 600
@@ -247,24 +250,22 @@ if __name__ == "__main__":
     highestScore = 0
     maxTuple = ()
     lastGenBirds = []
-
+    random.seed(0)
     while True:
-        print(maxTuple)
         gener += 1
-        random.seed(0)
+
         Birds = []
         Pipes = []
         score = 0
 
-        generateBirds(30, lastGenBirds, highestScore, maxTuple)
+        generateBirds(100, lastGenBirds, highestScore, maxTuple)
 
-        print(highestScore)
         pygame.init()
         display = pygame.display.set_mode((display_width, display_height))
         display.fill(white)
         pygame.display.update()
 
-        final_score = play_game(Birds, Pipes, highestScore, lastGenBirds, gener)
+        final_score = play_game(Birds, Pipes, lastGenBirds, gener)
 
         for tup in lastGenBirds:
             if highestScore < tup[1]:
