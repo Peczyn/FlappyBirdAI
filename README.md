@@ -18,19 +18,28 @@ This project is a Python implementation of a simplified version of Flappy Bird, 
    ```bash
    git clone https://github.com/Peczyn/FlappyBirdAI
    ```
-
+   
 2. **Install Dependencies:**
    ```bash
    cd FlappyBirdAI
    pip install -r requirements.txt
    ```
+   or
+   ```bash
+   cd FlappyBirdAI
+   pip3 install -r requirements.txt
+   ```
 
-3. **Run the Game:**
+4. **Run the Game:**
    ```bash
    python main.py
    ```
+   or
+   ```bash
+   python3 main.py
+   ```
 
-4. **Interact:**
+6. **Interact:**
    - Watch as the birds evolve and learn to avoid obstacles.
    - Press `UpArrow` to jump (if you want to mess with the birds).
 
