@@ -195,7 +195,7 @@ def generateBirds(numberOfBirds, lastGen, maxscore, maxTuple):
                               )
                          )
 
-def play_game(birds, pipes, lastGenerationBirdsArray, generation):
+def play_game(birds, pipes, lastGenerationBirdsArray, generation, run):
     timer = 0
     inGameScore = 0
     while birds.__sizeof__() != 0:
@@ -207,6 +207,8 @@ def play_game(birds, pipes, lastGenerationBirdsArray, generation):
             birdsThinking(birds, pipes[0])
 
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return -1
             if event.type == pygame.KEYUP:
                 for bird in birds:
                     bird.gravitation = -7
@@ -240,7 +242,7 @@ def play_game(birds, pipes, lastGenerationBirdsArray, generation):
 
 if __name__ == "__main__":
     gener = 0
-
+    running = True
     # initialize window and game parameters
     display_width = 600
     display_height = 600
@@ -258,18 +260,22 @@ if __name__ == "__main__":
         Pipes = []
         score = 0
 
-        generateBirds(100, lastGenBirds, highestScore, maxTuple)
+        generateBirds(10, lastGenBirds, highestScore, maxTuple)
 
         pygame.init()
         display = pygame.display.set_mode((display_width, display_height))
         display.fill(white)
         pygame.display.update()
 
-        final_score = play_game(Birds, Pipes, lastGenBirds, gener)
+        final_score = play_game(Birds, Pipes, lastGenBirds, gener, run=running)
+        if final_score < 0:
+            break
+
 
         for tup in lastGenBirds:
             if highestScore < tup[1]:
                 maxTuple = tup
                 highestScore = tup[1]
+    pygame.quit()
 
 
